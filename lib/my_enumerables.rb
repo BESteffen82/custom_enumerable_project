@@ -7,7 +7,74 @@ module Enumerable
       yield(item, i)
       i += 1
     end
-  end  
+  end
+  
+  def my_select
+    arr = []
+    for item in self
+      if (yield(item))
+        arr << item
+      end
+    end
+    return arr    
+  end
+
+  def my_all?
+    bool = true
+    for item in self
+      unless yield(item)
+        bool = false
+      end
+    end
+    return bool
+  end
+
+  def my_any?
+    bool = false
+    for item in self
+      if yield(item)
+        bool = true
+      end
+    end
+    return bool 
+  end
+
+  def my_none?
+    bool = true
+    for item in self
+      if yield(item)
+        bool = false
+      end
+    end
+    return bool
+  end
+
+  def my_count
+    i = 0
+    for item in self
+      unless block_given? && !yield(item)
+        i += 1
+      end      
+    end
+    return i
+  end
+
+  def my_map
+    total = []
+    for item in self
+      total << yield(item)      
+    end
+    return total
+  end
+  
+  def my_inject(start)
+    total = start
+    for item in self
+      total = yield(total, item)
+    end
+    return total
+  end
+
 end
 
 # You will first have to define my_each
